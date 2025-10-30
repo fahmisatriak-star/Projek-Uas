@@ -1,0 +1,307 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+.navbar-custom {
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+}
+.navbar-custom .nav-link {
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+.navbar-custom .nav-link:hover {
+  color: #007bff;
+}
+.navbar-brand img {
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+.navbar-brand img:hover {
+  transform: scale(1.05);
+}
+.produk-container {
+  padding: 40px 0;
+}
+
+.card {
+  border: none;
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  height: px;
+  object-fit: cover;
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.card-text {
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 20px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* ====== MODAL DETAIL PRODUK ====== */
+.modal-content {
+  border-radius: 15px;
+}
+
+.modal-header {
+  background-color: #007bff;
+  color: white;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.modal-body img {
+  border-radius: 10px;
+}
+
+.modal-footer .btn-primary {
+  background-color: #007bff;
+  border: none;
+}
+
+.modal-footer .btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* ====== FOOTER ====== */
+footer {
+  background-color: #ffffff;
+  color: #555;
+  font-size: 0.9rem;
+  border-top: 1px solid #ddd;
+}
+
+footer p {
+  margin: 0;
+}
+#cartButton {
+  border: none;
+  background: transparent;
+  position: relative;
+  margin-left: 10px;
+  transition: transform 0.3s ease;
+}
+
+#cartButton:hover {
+  transform: scale(1.1);
+}
+
+#cartCount {
+  font-size: 0.75rem;
+  padding: 4px 6px;
+}
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+  .card-img-top {
+    height: 180px;
+  }
+}
+
+@media (max-width: 576px) {
+  .card-img-top {
+    height: 150px;
+  }
+  .navbar-brand img {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toko Serba Serbi</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="home page.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-custom shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><img src="logo.png" alt="logo" width="60" height="60"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link" href="#">Beranda</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Produk</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Tentang Kami</a></li>
+        </ul>
+        <div class="d-flex align-items-center ms-auto me-2">
+      <button class="btn btn-light position-relative" id="cartButton" data-bs-toggle="modal" data-bs-target="#cartModal">
+
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M6 6h15l-1.5 9h-11L6 6z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="10" cy="20" r="1" fill="currentColor"/>
+          <circle cx="18" cy="20" r="1" fill="currentColor"/>
+        </svg>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cartCount">0</span>
+      </button>
+    </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Daftar Produk -->
+  <section class="produk-container container my-4">
+    <div class="row row-cols-1 row-cols-md-3 g-4" id="produk-list"></div>
+  </section>
+
+  <!-- Modal Detail Produk -->
+  <div class="modal fade" id="produkModal" tabindex="-1" aria-labelledby="produkModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="produkModalLabel">Detail Produk</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-center">
+          <img id="modal-img" src="" alt="Produk" class="img-fluid mb-3" style="max-height:200px;">
+          <h5 id="modal-nama"></h5>
+          <p class="text-success fw-bold" id="modal-harga"></p>
+          <p id="modal-deskripsi"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+          <button type="button" class="btn btn-primary" id="btnTambahKeranjang">Tambah ke Keranjang</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Keranjang -->
+  <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="cartModalLabel">Keranjang Belanja</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group" id="cartItems"></ul>
+          <hr>
+          <h6>Total: <span id="cartTotal" class="fw-bold text-success">Rp0</span></h6>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+          <button class="btn btn-success">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer --> 
+  <footer class="text-center mt-5 py-3 bg-light border-top">
+    <p>&copy; 2025 Toko Serba Serbi | Semua Hak Dilindungi</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Nama Produk Dan Gambar Produk --> 
+  <script>
+    const produkData = [
+      { nama: "Kipas Angin Gantung Leher Portable USB", harga: 29900, gambar: "produk1.jpg", deskripsi: "Kipas leher portable dengan daya USB." },
+      { nama: "Sepatu Sneaker Pria Wanita", harga: 50000, gambar: "produk2.jpg", deskripsi: "Sepatu kasual nyaman untuk pria dan wanita." },
+      { nama: "Jam Tangan Mewah Pria", harga: 70000, gambar: "produk3.jpg", deskripsi: "Jam tangan elegan dengan desain klasik." },
+      { nama: "Smartwatch", harga: 180000, gambar: "produk4.jpg", deskripsi: "Smartwatch multifungsi dengan sensor detak jantung." },
+      { nama: "Pengharum Mobil Gantung", harga: 19470, gambar: "produk5.jpg", deskripsi: "Pengharum mobil gantung beraroma menyegarkan." },
+      { nama: "Facial Wash Niacinamide", harga: 59900, gambar: "produk8.jpg", deskripsi: "Niacinamide Facial Wash Anti Komedo Dan Kulit kusam." }
+    ];
+
+    const listContainer = document.getElementById("produk-list");
+    const cartItems = [];
+    const cartCount = document.getElementById("cartCount");
+    const cartTotal = document.getElementById("cartTotal");
+    const cartList = document.getElementById("cartItems");
+
+    // tampilkan produk
+    produkData.forEach((p, i) => {
+      listContainer.innerHTML += `
+        <div class="col">
+          <div class="card h-100 shadow-sm">
+            <img src="${p.gambar}" class="card-img-top" alt="${p.nama}">
+            <div class="card-body text-center">
+              <h5 class="card-title">${p.nama}</h5>
+              <p class="card-text text-success fw-bold">Rp${p.harga.toLocaleString()}</p>
+              <button class="btn btn-primary" onclick="tampilkanDetail(${i})">Lihat Detail</button>
+            </div>
+          </div>
+        </div>`;
+    });
+
+    let produkTerpilih = null;
+
+    function tampilkanDetail(index) {
+      produkTerpilih = produkData[index];
+      document.getElementById("modal-nama").textContent = produkTerpilih.nama;
+      document.getElementById("modal-harga").textContent = "Rp" + produkTerpilih.harga.toLocaleString();
+      document.getElementById("modal-deskripsi").textContent = produkTerpilih.deskripsi;
+      document.getElementById("modal-img").src = produkTerpilih.gambar;
+      const modal = new bootstrap.Modal(document.getElementById("produkModal"));
+      modal.show();
+    }
+
+    // Tambah ke keranjang
+    document.getElementById("btnTambahKeranjang").addEventListener("click", () => {
+      if (produkTerpilih) {
+        cartItems.push(produkTerpilih);
+        updateCart();
+        const modal = bootstrap.Modal.getInstance(document.getElementById("produkModal"));
+        modal.hide();
+      }
+    });
+
+    function updateCart() {
+      cartList.innerHTML = "";
+      let total = 0;
+      cartItems.forEach((item) => {
+        cartList.innerHTML += `
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            ${item.nama}
+            <span class="text-success">Rp${item.harga.toLocaleString()}</span>
+          </li>`;
+        total += item.harga;
+      });
+      cartCount.textContent = cartItems.length;
+      cartTotal.textContent = "Rp" + total.toLocaleString();
+    }
+  </script>
+</body>
+</html>
